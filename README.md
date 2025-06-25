@@ -1,8 +1,4 @@
-Great! Here’s a professional and complete `README.md` file tailored for your **[garden-tips-backend](https://github.com/rantu01/garden-tips-backend)** repository. This assumes your backend is built with Node.js, Express, MongoDB, and JWT-based authentication.
 
----
-
-```markdown
 # 🌱 Garden Tips - Backend
 
 This is the **backend API** for the [Garden Tips](https://github.com/rantu01/garden-tips) full-stack project. It handles user authentication, tip management (CRUD), and secure data operations using **Node.js**, **Express**, and **MongoDB**.
