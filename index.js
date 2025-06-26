@@ -35,7 +35,7 @@ async function run() {
       try {
         const result = await gardenersCollection
           .find({ status: "Active" })
-          .limit(6)
+          .limit(8)
           .toArray();
         res.send(result);
       } catch (error) {
