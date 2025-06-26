@@ -53,6 +53,26 @@ async function run() {
       }
     });
 
+    // GET single gardener by ID
+    app.get("/gardeners/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        const gardener = await gardenersCollection.findOne({
+          _id: new ObjectId(id),
+        });
+
+        if (!gardener) {
+          return res.status(404).send({ message: "Gardener not found" });
+        }
+
+        res.send(gardener);
+      } catch (error) {
+        console.error("Error fetching gardener details:", error);
+        res.status(500).send({ message: "Failed to fetch gardener details" });
+      }
+    });
+
     // Get Top 6 Trending Tips
     app.get("/tips-show", async (req, res) => {
       const limit = parseInt(req.query.limit) || 6;
@@ -150,7 +170,7 @@ async function run() {
       await tipsCollection.deleteOne({ _id: new ObjectId(id) });
       res.sendStatus(204);
     });
-    
+
     //putputput
     app.put("/api/tips/:id", async (req, res) => {
       try {
