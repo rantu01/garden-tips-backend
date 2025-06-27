@@ -30,6 +30,45 @@ async function run() {
     const gardenersCollection = client.db("GDB").collection("gardeners");
     const tipsCollection = client.db("GDB").collection("tips");
 
+    // server.js or routes/gardeners.js
+
+    app.post("/api/gardeners", async (req, res) => {
+      try {
+        const { name, email, photoURL, uid } = req.body;
+
+        if (!email || !uid) {
+          return res.status(400).json({ error: "Email and UID are required" });
+        }
+
+        const existingGardener = await gardenersCollection.findOne({ uid });
+
+        if (existingGardener) {
+          return res.status(200).json({ message: "Gardener already exists" });
+        }
+
+        const gardenerData = {
+          name,
+          email,
+          photoURL: photoURL || "",
+          uid,
+          createdAt: new Date(),
+          role: "gardener", // optional: for role management later
+        };
+
+        await gardenersCollection.insertOne(gardenerData);
+
+        res
+          .status(201)
+          .json({
+            message: "Gardener registered successfully",
+            gardener: gardenerData,
+          });
+      } catch (error) {
+        console.error("Error saving gardener:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     // Define route after DB connection
     app.get("/gardeners", async (req, res) => {
       try {
